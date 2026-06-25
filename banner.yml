@@ -1,6 +1,6 @@
 ---
 - name: Deploy Fancy Banner to Execution Nodes
-  hosts: execution_nodes
+  hosts: all
   become: true
   gather_facts: true
 
