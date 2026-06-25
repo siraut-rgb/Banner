@@ -1,0 +1,35 @@
+---
+- name: Deploy Fancy Banner to Execution Nodes
+  hosts: execution_nodes
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Populate the fancy MOTD banner
+      ansible.builtin.copy:
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          =================================================================================
+             ███████╗██╗  ██╗███████╗ ██████╗██╗   ██╗████████╗██╗ ██████╗ ███╗   ██╗
+             ██╔════╝╚██╗██╔╝██╔════╝██╔════╝██║   ██║╚══██╔══╝██║██╔═══██╗████╗  ██║
+             █████╗   ╚███╔╝ █████╗  ██║     ██║   ██║   ██║   ██║██║   ██║██╔██╗ ██║
+             ██╔══╝   ██╔██╗ ██╔══╝  ██║     ██║   ██║   ██║   ██║██║   ██║██║╚██╗██║
+             ███████╗██╔╝ ██╗███████╗╚██████╗╚██████╔╝   ██║   ██║╚██████╔╝██║ ╚████║
+             ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+          =================================================================================
+                                   ENVIRONMENT: EXECUTION LAYER
+                       UNAUTHORIZED ACCESS TO THIS INFRASTRUCTURE IS PROHIBITED
+          =================================================================================
+          
+           [+] Node Name:       {{ ansible_hostname }}
+           [+] OS Distribution: {{ ansible_distribution }} {{ ansible_distribution_version }}
+           [+] Kernel Version:  {{ ansible_kernel }}
+           [+] Total Memory:    {{ (ansible_memtotal_mb / 1024) | round(2) }} GB
+           [+] Management IP:   {{ ansible_default_ipv4.address | default('N/A') }}
+          
+          =================================================================================
+          Attention: All activities on this execution node are logged and monitored.
+          =================================================================================
